@@ -12,37 +12,21 @@ import android.app.NotificationChannel
 import android.app.PendingIntent
 import android.R.id
 import android.nfc.NfcAdapter.EXTRA_ID
+import android.os.PowerManager
 import java.util.*
+import android.support.v4.content.ContextCompat.startActivity
+
+
 
 
 class AlarmReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context?, receivedIntent: Intent?) {
         Toast.makeText(context,"Start",Toast.LENGTH_LONG).show()
-//        val audioPlayer = StreamAudioPlayer.getInstance(context!!)
-//        var sourceURL = "http://radioluz.pwr.edu.pl:8000/luzhifi.mp3"
-//        audioPlayer.playItem(sourceURL)
-        val intent = Intent(context, MainActivity::class.java)
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        val id: Int = (Math.random() * 50 + 1).toInt()
-        intent.putExtra("notificationId", id)
-
-        val pendingIntent = PendingIntent.getActivity(context!!, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            val channel = NotificationChannel("default", "Default", NotificationManager.IMPORTANCE_DEFAULT)
-            Objects.requireNonNull(notificationManager).createNotificationChannel(channel)
-        }
-
-        val notification = NotificationCompat.Builder(context, "default")
-                .setContentTitle("Title")
-                .setContentText("text")
-                .setContentIntent(pendingIntent)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setAutoCancel(true)
-        notificationManager.notify(id,notification.build())
+        val i = Intent()
+        i.setClassName("com.example.anoopmohanan.streamaudioapp", "com.example.anoopmohanan.streamaudioapp.AlarmActivity")
+        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context!!.startActivity(i)
 
     }
 }
