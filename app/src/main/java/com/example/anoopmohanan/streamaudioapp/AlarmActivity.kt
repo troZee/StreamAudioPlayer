@@ -8,6 +8,7 @@ import com.example.anoopmohanan.streamaudioapp.player.StreamAudioPlayer
 import android.os.PowerManager
 
 import android.view.WindowManager
+import kotlinx.android.synthetic.main.activity_alarm.*
 
 class AlarmActivity : AppCompatActivity() {
 
@@ -24,6 +25,9 @@ class AlarmActivity : AppCompatActivity() {
         turnOnScreen()
         audioPlayer = StreamAudioPlayer.getInstance(this)
         audioPlayer.playItem(sourceURL)
+        btn_stop.setOnClickListener {
+            audioPlayer.stop()
+        }
     }
 
     private fun turnOnScreen() {
